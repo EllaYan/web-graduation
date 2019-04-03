@@ -1,9 +1,23 @@
 import Vue from 'vue'
 import App from './App.vue'
+import Router from 'vue-router'
 import './plugins/element.js'
 
+import A from './pages/a.vue'
+
 Vue.config.productionTip = false
+Vue.use(Router)
+
+const router = new Router({
+    routes: [{
+        path: '/',
+        name: 'index',
+        component: A,
+    }]
+})
+
 
 new Vue({
-  render: h => h(App),
+    render: h => h(App),
+    router,
 }).$mount('#app')
