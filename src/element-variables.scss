@@ -3,7 +3,42 @@ Write your variables here. All available variables can be
 found in element-ui/packages/theme-chalk/src/common/var.scss.
 For example, to overwrite the theme color:
 */
-$--color-primary: teal;
+/* Element Chalk Variables */
+
+// Special comment for theme configurator
+// type|[Chinese Name, English Name, Spanish Name, French Name]|Category|Order
+
+
+/* Color
+-------------------------- */
+/// color|[主题色,primary color,color primario]|BrandColor|0
+$--color-primary: #2166E7 !default;
+/// color|[成功颜色,success color,success color]|SecondaryColor|1
+$--color-success: #2166E7 !default;
+/// color|[警告颜色,warning color,warning color]|SecondaryColor|1
+$--color-warning: #fd9f2d !default;
+/// color|[危险颜色,danger color,danger color]|SecondaryColor|1
+$--color-danger: #ea5858 !default;
+/// color|[信息颜色,info color,info color]|SecondaryColor|1
+$--color-info: #50bfff !default;
+
+$--color-white: #fff !default;
+$--color-black: #000 !default;
+$--color-gray: #dde4ea !default;
+
+$--text-color: #262626; // 主要文本颜色
+$--text-normal-color: #545456; //常规文本颜色
+$--text-assist-color: #757f89; // 辅助文本颜色，主要用在次级文本
+$--text-disabled-color: #c2cad1; //文本不可用颜色，主要用在placeholder
+$--text-light-color: #fff; // 彩色背景文本颜色
+
+$--body-fill: #fff; //主体背景色
+$--content-fill: #f0f2f5; //内容区域背景色
+
+
+$--box-shadow-base: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04) !default;
+$--box-shadow-dark: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.12) !default;
+$--box-shadow-light: 0 2px 12px 0 rgba(0, 0, 0, 0.2) !default;
 
 
 /* icon font path, required */

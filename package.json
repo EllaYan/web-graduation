@@ -10,6 +10,8 @@
   "dependencies": {
     "core-js": "^2.6.5",
     "element-ui": "^2.4.5",
+    "js-cookie": "^2.2.0",
+    "tinymce": "^5.0.3",
     "vue": "^2.6.6",
     "vue-router": "^3.0.2"
   },
