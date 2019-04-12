@@ -22,15 +22,24 @@ export default {
 </script>
 
 <style>
+/* 全局样式 */
 body{
     margin:0;
 }
 .el-main{
+    padding: 0 !important;
     background-color: #f5f5f5;;
 }
 .pagination{
     display: flex;
     justify-content: flex-end;
+}
+.page-tabs{
+    padding: 0 1.5%;
+    background-color: #fff;
+}
+.page-tabs .el-tabs__header {
+    margin: 0;
 }
 .card-box{
     width:97%;
