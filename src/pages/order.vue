@@ -5,19 +5,19 @@
             class="page-tabs">
             <el-tab-pane
                 label="全部"
-                name="1">
+                name="-1">
             </el-tab-pane>
             <el-tab-pane
                 label="未发货"
-                name="2">
+                name="0">
             </el-tab-pane>
             <el-tab-pane
                 label="已发货"
-                name="3">
+                name="1">
             </el-tab-pane>
             <el-tab-pane
                 label="已完结"
-                name="4">
+                name="5">
             </el-tab-pane>
         </el-tabs>
         <el-card class="card-box">
@@ -57,26 +57,9 @@ export default {
                 pageSize: 15,
                 total: 2,
             },
-            tabName:'1',
+            tabName:'0',
             loading:false,
-            tableData: [
-                {
-                    orderNo: '0000001',
-                    x: '李先生',
-                    xx: '依琳洗衣店',
-                    xxx: '',
-                    xxxx: '大米【5Kg】x1',
-                    yy: '自提'
-                },
-                {
-                    orderNo: '0000002',
-                    x: '宋女士',
-                    xx: '依琳洗衣店',
-                    xxx: '北京市朝阳区旭辉奥都1号楼1101室',
-                    xxxx: '香蕉【1Kg】x1；苹果【2kg】x1',
-                    yy: '送货上门'
-                }
-            ],
+            tableData: [],
         }
     },
     methods: {
