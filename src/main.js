@@ -12,6 +12,7 @@ import Classify from './/pages/classify.vue'
 import Sku from './pages/sku.vue'
 import System from './pages/system.vue'
 import Achievement from './pages/achievement.vue'
+import Login from './pages/login.vue'
 
 Vue.config.productionTip = false
 Vue.use(Router)
@@ -22,7 +23,12 @@ const router = new Router({
             path: '/',
             name: 'index',
             component: app,
-            redirect:{ name: 'order' }
+            redirect:{ name: 'login' }
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: Login,
         },
         {
             path: '/apply',

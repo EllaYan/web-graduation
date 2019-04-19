@@ -1,7 +1,7 @@
 <template>
   <div id="app">
       <el-container>
-          <side-bar></side-bar>
+          <side-bar v-if="isLogin"></side-bar>
             <el-main>
                 <router-view></router-view>
             </el-main>
@@ -18,6 +18,14 @@ export default {
         sideBar,
     },
     name: 'app',
+    data() {
+        return {
+            isLogin: false,
+        }
+    },
+    created() {
+        this.isLogin = !!localStorage.getItem('Authorization')
+    },
 }
 </script>
 
