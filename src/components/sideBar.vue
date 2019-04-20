@@ -80,7 +80,7 @@ export default {
 .menu-container{
     background-color: #404449;
     color:#fff;
-    width:200px;
+    width:199.9px;
     border:0;
     .el-menu-item{
         color: #fff;

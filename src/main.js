@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import Router from 'vue-router'
+import Vuex from 'vuex'
 import './plugins/element.js'
 import 'core-js'
 
@@ -16,6 +17,7 @@ import Login from './pages/login.vue'
 
 Vue.config.productionTip = false
 Vue.use(Router)
+Vue.use(Vuex)
 
 const router = new Router({
     routes: [
