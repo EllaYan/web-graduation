@@ -1,12 +1,16 @@
 <template>
   <div>
     <el-form v-model="loginForm">
-      <el-form-item label="用户名">
+      <el-form-item label="手机号">
         <el-input v-model="loginForm.phone"></el-input>
       </el-form-item>
 
       <el-form-item label="密码">
         <el-input v-model="loginForm.password" type="password"></el-input>
+      </el-form-item>
+      <el-form-item label="验证码">
+        <el-input v-model="loginForm.checkCode" ></el-input>
+        <el-button type="primary" id="get-code" @click="toSendLoginCheckCode">获取验证码</el-button>
       </el-form-item>
     </el-form>
 
@@ -15,18 +19,29 @@
 </template>
 
 <script>
-import { login } from '../api/index.js'
+import { login,sendLoginCheckCode } from '../api/index.js'
 export default {
   data() {
     return {
       loginForm: {
         phone: '',
         password: '',
+        checkCode: ''
       },
     }
   },
 
   methods: {
+    toSendLoginCheckCode() {
+      sendLoginCheckCode({
+        phone: this.loginForm.phone
+      }).then(() => {
+                this.$notify({
+                    message: '验证码发送成功',
+                    type: 'success'
+                })
+            })
+    },
     toLogin() {
       window.console.log(this.loginForm)
       login(this.loginForm).then((res) => {
@@ -41,7 +56,9 @@ export default {
 </script>
 
 <style>
-
+#get-code {
+  margin-left: 20px;
+}
 </style>
 
 

@@ -1,5 +1,16 @@
 import service from './request.js'
 
+// 登录前发送验证码
+export function sendLoginCheckCode(param){
+  return service({
+    url: 'send/checkCode/login',
+    method: 'post',
+    data: {
+      phone: param.phone
+    }
+  })
+}
+
 // 登录
 export function login(param) {
   return service({
@@ -8,6 +19,7 @@ export function login(param) {
     data: {
       phone: param.phone,
       password: param.password,
+      checkCode: param.checkCode
     }
   })
 }
@@ -95,6 +107,7 @@ export function updateSku(param) {
   })
 }
 
+// 删除商品
 export function deleteSku(param){
   return service({
     url: 'sku/del',
@@ -102,6 +115,13 @@ export function deleteSku(param){
     data:{
       skuId: param
     }
+  })
+}
+
+// 获得团长申请列表
+export function regimentalInfoList(param){
+  return service.get('regimentalInfo/list',{
+    params: param
   })
 }
 
@@ -117,4 +137,65 @@ export function listSku(param) {
       pageSize: param.pageSize
     }
   })
+}
+
+// 获得管理员列表
+export function listAdmin(){
+  return service({
+    url: 'admin/list',
+    method: 'post',
+    data: {}
+  })
+}
+
+// 添加管理员
+export function addAdmin(param) {
+  return service({
+    url: 'admin/add',
+    method: 'post',
+    data: {
+      name: param.name,
+      phone: param.phone,
+      password: param.password
+    }
+  })
+}
+
+// 管理员修改信息之前 发送验证码
+export function sendAdminCheckCode() {
+  return service({
+    url: '/send/checkCode/admin',
+    method: 'post',
+    data: {}
+  })
+}
+
+// 修改管理员信息
+export function updateAdmin(param) {
+  return service({
+    url: 'admin/update',
+    method: 'post',
+    data: {
+      name: param.name,
+      phone: param.phone,
+      password: param.password,
+      checkCode: param.checkCode
+    }
+  })
+}
+
+// 格式化日期方法
+export function formatDate(time) {
+  var date=new Date(time);
+  var year=date.getFullYear();
+  /* 在日期格式中，月份是从0开始的，因此要加0
+   * 使用三元表达式在小于10的前面加0，以达到格式统一  如 09:11:05
+   * */
+  var month= date.getMonth()+1<10 ? "0"+(date.getMonth()+1) : date.getMonth()+1;
+  var day=date.getDate()<10 ? "0"+date.getDate() : date.getDate();
+  var hours=date.getHours()<10 ? "0"+date.getHours() : date.getHours();
+  var minutes=date.getMinutes()<10 ? "0"+date.getMinutes() : date.getMinutes();
+  var seconds=date.getSeconds()<10 ? "0"+date.getSeconds() : date.getSeconds();
+  // 拼接
+  return year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
 }
