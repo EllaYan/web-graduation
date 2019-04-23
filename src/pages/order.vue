@@ -49,6 +49,8 @@
     </div>
 </template>
 <script>
+import { listOrder } from '../api/index.js'
+
 export default {
     data() {
         return {
@@ -63,6 +65,11 @@ export default {
         }
     },
     methods: {
+        toListOrder(){
+            listOrder({
+                
+            })
+        },
         handlePage() {},
     }
 }
