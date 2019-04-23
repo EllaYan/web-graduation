@@ -23,14 +23,16 @@
         <el-card class="card-box">
             <div v-loading="loading" element-loading-text="加载中">
                 <el-table :data="tableData" :header-row-style="{color:'#333'}">
-                    <el-table-column prop="name" label="姓名" min-width="120" align="center"></el-table-column>
+                    <el-table-column prop="realName" label="姓名" min-width="120" align="center"></el-table-column>
                     <el-table-column prop="phone" label="手机号" min-width="120" align="center"></el-table-column>
-                    <el-table-column prop="addr" label="地址" min-width="160" align="center" :show-overflow-tooltip="true"></el-table-column>
+                    <el-table-column prop="address" label="地址" min-width="160" align="center" :show-overflow-tooltip="true"></el-table-column>
+                    <el-table-column prop="createData" :formatter="formatDate" label="申请日期" min-width="120" align="center"></el-table-column>
                     <el-table-column prop="" label="操作" min-width="200" align="center">
                         <template slot-scope="scope">
-                            <el-button type="text" v-if="scope.row.state === 1">通过</el-button>
-                            <el-button type="text" style="color:red;" v-if="scope.row.state === 1">驳回</el-button>
-                            <span v-if="scope.row.state === 2">已通过</span>
+                            <el-button type="text" @click="toUpdateRegimentalInfo(scope.row,1)" v-if="scope.row.status === 0">通过</el-button>
+                            <el-button type="text" @click="toUpdateRegimentalInfo(scope.row,2)" style="color:red;" v-if="scope.row.status === 0">驳回</el-button>
+                            <span v-if="scope.row.status === 1">已通过</span>
+                            <span v-if="scope.row.status === 2">已通过</span>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -48,34 +50,67 @@
     </div>
 </template>
 <script>
+import { listRegimentalInfo,formatDate,updateRegimentalInfo } from '../api/index.js'
 export default {
+    watch: {
+        tabName: {
+            handler(val) {
+                if(val === '1') {
+                    this.status = ''
+                } else if (val === '2') {
+                    this.status = 0
+                } else if (val === '3') {
+                    this.status = 1
+                }else if (val === '4') {
+                    this.status = 2
+                }
+                this.page.currentPage = 1
+                this.toListRegimentalInfo()
+            },
+            immediate: true
+        },
+    },
     data() {
         return {
             loading: false,
+            status: '',
             page: {
                 currentPage: 1,
                 pageSize: 15,
-                total: 2,
+                total: 0,
             },
-            tableData: [
-                {
-                    name: '王女士',
-                    phone: '13425678906',
-                    addr: '北京市海淀区西二旗八维研修学院餐厅地下一层饮品店',
-                    state:1
-                },
-                {
-                    name: '古先生',
-                    phone: '13625978946',
-                    addr: '北京市朝阳区高家园小区二号楼一单元403室',
-                    state:2
-                }
-            ],
+            tableData: [],
             tabName: '1',
         }
     },
     methods: {
-        handlePage() {},
+        toListRegimentalInfo() {
+            listRegimentalInfo({
+                status: this.status,
+                page: this.page.currentPage,
+                pageSize: this.page.pageSize
+            }).then((res) => {
+                this.tableData = res.data.content
+                this.page.total = res.data.totalElements
+            })
+        },
+        toUpdateRegimentalInfo(row,isPass) {
+            updateRegimentalInfo({
+                regimentalInfoId: row.id,
+                status: isPass
+            }).then(() => {
+                this.toListRegimentalInfo()
+            })
+        },
+        formatDate(row, column){
+            return formatDate(row.createData)
+        },
+        handlePage() {
+            this.toListRegimentalInfo()
+        },
+    },
+    created() {
+        this.toListRegimentalInfo()
     }
 }
 </script>

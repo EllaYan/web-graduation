@@ -118,10 +118,29 @@ export function deleteSku(param){
   })
 }
 
+// 获得订单列表
+export function listOrder(param) {
+  return service.get('order/list',{
+    params: param
+  })
+}
+
 // 获得团长申请列表
-export function regimentalInfoList(param){
+export function listRegimentalInfo(param){
   return service.get('regimentalInfo/list',{
     params: param
+  })
+}
+
+// 审核团长
+export function updateRegimentalInfo(param) {
+  return service({
+    url: 'regimentalInfo/update',
+    method: 'post',
+    data: {
+      regimentalInfoId: param.regimentalInfoId,
+      status: param.status
+    }
   })
 }
 

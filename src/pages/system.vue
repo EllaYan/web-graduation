@@ -75,7 +75,7 @@
     </div>
 </template>
 <script>
-import { listAdmin,formatDate,addAdmin,sendAdminCheckCode, sendLoginCheckCode,updateAdmin, updateCategory } from '../api/index.js'
+import { listAdmin,formatDate,addAdmin,sendAdminCheckCode,updateAdmin } from '../api/index.js'
 
 export default {
     data() {
