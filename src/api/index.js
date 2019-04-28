@@ -144,6 +144,13 @@ export function updateRegimentalInfo(param) {
   })
 }
 
+// 获得团长佣金列表
+export function listRegimentalCommission(param){
+  return service.get('regimentalInfo/commission/list',{
+    params: param
+  })
+}
+
 // 获取商品列表
 export function listSku(param) {
   return service({
