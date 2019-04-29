@@ -46,7 +46,7 @@ export default {
       window.console.log(this.loginForm)
       login(this.loginForm).then((res) => {
         localStorage.setItem('Authorization',res.data.Authorization)
-        this.$router.push({ path:'/order' })
+        this.$router.push({ path:'/classify' })
         location.reload();
       })
 

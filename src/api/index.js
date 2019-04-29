@@ -125,6 +125,18 @@ export function listOrder(param) {
   })
 }
 
+// 修改订单状态(商家发货)
+export function updateOrder(param){
+  return service({
+    url: 'ordinaryOrder/update',
+    method: 'post',
+    data:{
+      orderGroupId: param.orderGroupId,
+      status: 1
+    }
+  })
+}
+
 // 获得团长申请列表
 export function listRegimentalInfo(param){
   return service.get('regimentalInfo/list',{
