@@ -115,7 +115,7 @@ export default {
         toUpdateOrder(row){
             updateOrder({
                 orderGroupId: row.orderGroup.id
-            }).then(res => {
+            }).then(() => {
                 this.$notify({
                         title: '成功',
                         message: '修改成功',
@@ -124,13 +124,13 @@ export default {
                 this.toListOrder()
             })
         },
-        formatLogisticsType(row,column){
+        formatLogisticsType(row){
             return row.orderGroup.logisticsType===0 ? '送货上门' : '自提'
         },
-        formatAddress(row,column){
+        formatAddress(row){
             return row.orderGroup.receiveAddress.split('address=')[1].split(',')[0]
         },
-        formatDate(row, column){
+        formatDate(row){
             return formatDate(row.orderGroup.createData)
         },
         handlePage() {
