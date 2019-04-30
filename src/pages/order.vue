@@ -33,10 +33,10 @@
                     <el-table-column :formatter="formatDate" label="下单日期" min-width="180" align="center"></el-table-column>
                     <el-table-column :formatter="formatLogisticsType" label="配送类型" min-width="120" align="center"></el-table-column>
                     <el-table-column :formatter="formatAddress" label="收货地址" min-width="160" align="center" :show-overflow-tooltip="true"></el-table-column>
-                    <el-table-column prop="orderGroup.countAmount" label="商品件数" min-width="160" align="center" :show-overflow-tooltip="true"></el-table-column>
-                    <el-table-column prop="orderGroup.countPrice" label="订单总价" min-width="160" align="center" :show-overflow-tooltip="true"></el-table-column>
-                    <el-table-column prop="orderGroup.realPrice" label="实际支付" min-width="160" align="center" :show-overflow-tooltip="true"></el-table-column>
-                    <el-table-column prop="" label="当前状态" min-width="200" align="center">
+                    <el-table-column prop="orderGroup.countAmount" label="商品件数" min-width="80" align="center" :show-overflow-tooltip="true"></el-table-column>
+                    <el-table-column prop="orderGroup.countPrice" label="订单总价" min-width="80" align="center" :show-overflow-tooltip="true"></el-table-column>
+                    <el-table-column prop="orderGroup.realPrice" label="实际支付" min-width="80" align="center" :show-overflow-tooltip="true"></el-table-column>
+                    <el-table-column prop="" label="当前状态" min-width="120" align="center">
                         <template slot-scope="scope">
                             <span v-if="scope.row.orderGroup.logisticsStatus === -1">待支付</span>
                             <span v-if="scope.row.orderGroup.logisticsStatus === 0">待发货</span>
@@ -46,7 +46,7 @@
                     </el-table-column>
                     <el-table-column prop="" label="操作" min-width="200" align="center">
                         <template slot-scope="scope">
-                            <el-button type="text" >查看详情</el-button>&nbsp;&nbsp;
+                            <el-button type="text" @click="toLook(scope.row)">查看详情</el-button>
                             <el-button type="text" @click="toUpdateOrder(scope.row)" v-if="scope.row.orderGroup.logisticsStatus === 0">发货</el-button>
                         </template>
                     </el-table-column>
@@ -62,6 +62,32 @@
                 </el-pagination>
             </div>
         </el-card>
+
+        <el-dialog
+            title="提示"
+            :visible.sync="dialogVisible">
+            <div v-for="item in skuList" :key="item.id" class="list">
+                <el-form label-width="80px">
+                    <el-form-item label="商品名">
+                        <span>{{item.skuImage.skuName}}</span>
+                    </el-form-item>
+                    <el-form-item label="价格">
+                        <span>{{item.skuImage.discountPrice}}</span>
+                    </el-form-item>
+                    <el-form-item label="数量">
+                        <span>{{item.amount}}</span>
+                    </el-form-item>
+                    <el-form-item label="缩略图">
+                        <img :src="item.skuImage.thumbnail" alt="" style="width:130px;height:100px;">
+                    </el-form-item>
+                </el-form>
+            </div>
+
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="dialogVisible = false">关闭</el-button>
+            </span>
+        </el-dialog>
+
     </div>
 </template>
 <script>
@@ -90,18 +116,29 @@ export default {
     },
     data() {
         return {
+            dialogVisible: false,
             page: {
                 currentPage: 1,
-                pageSize: 15,
+                pageSize: 10,
                 total: 0,
             },
             tabName:'1',
             logisticsStatus: 1,
             loading:false,
             tableData: [],
+            skuList: [],
         }
     },
     methods: {
+        toLook(row) {
+            this.skuList = []
+            let skuList = row.orderInfoList
+            skuList.forEach(e => {
+                e.skuImage = JSON.parse(e.skuImage)
+            })
+            this.skuList = skuList
+            this.dialogVisible = true
+        },
         toListOrder(){
             listOrder({
                 logisticsStatus: this.logisticsStatus,
@@ -144,6 +181,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.list{
+    border-bottom: 1px dotted #969696;
+}
 </style>
 

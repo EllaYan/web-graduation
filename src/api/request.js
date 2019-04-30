@@ -33,6 +33,16 @@ service.interceptors.response.use(
   response => {
     let res = response.data
     if (res.code === 1) {return res}
+    else if (res.code === 401) {
+      window.console.log('dd',res.code)
+      // router.push({ path:'/login' })
+      window.location.hash = '/login'
+      Message({
+        message: res.data,
+        type: 'error'
+      });
+      location.reload();
+    }
     else {
       Message({
         message: res.data,

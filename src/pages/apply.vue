@@ -50,7 +50,7 @@
     </div>
 </template>
 <script>
-import { listRegimentalInfo,formatDate,updateRegimentalInfo } from '../api/index.js'
+import { listRegimentalInfo, formatDate, updateRegimentalInfo } from '../api/index.js'
 export default {
     watch: {
         tabName: {
@@ -102,7 +102,7 @@ export default {
                 this.toListRegimentalInfo()
             })
         },
-        formatDate(row, column){
+        formatDate(row){
             return formatDate(row.createData)
         },
         handlePage() {

@@ -12,6 +12,7 @@
                 <span slot="title">{{item.displayName}}</span>
             </el-menu-item>
         </el-menu>
+        <div class="login-out" @click="loginOut">退出</div>
     </el-aside>
 </template>
 
@@ -48,6 +49,10 @@ export default {
         }
     },
     methods: {
+        loginOut() {
+            localStorage.clear();
+            this.$router.push({path: '/login'})
+        }
     }
 }
 </script>
@@ -62,6 +67,11 @@ export default {
     color: #fff;
     width:200px !important;
     overflow: hidden;
+    .login-out{
+        position: fixed;
+        bottom:40px;
+        cursor: pointer;
+    }
 }
 .user-info{
     margin-top: 40px;

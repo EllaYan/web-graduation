@@ -1,20 +1,29 @@
 <template>
-  <div>
-    <el-form v-model="loginForm">
-      <el-form-item label="手机号">
-        <el-input v-model="loginForm.phone"></el-input>
-      </el-form-item>
+  <div class="login-page">
+    <div class="form-box">
+      <el-form v-model="loginForm" label-width="60px" size="small">
+        <p>社区团购系统</p>
+        <el-form-item label="手机号">
+          <el-input v-model="loginForm.phone"></el-input>
+        </el-form-item>
+        <el-form-item label="密码">
+          <el-input v-model="loginForm.password" type="password"></el-input>
+        </el-form-item>
+        <el-form-item label="验证码">
+          <div id="code-input">
+            <el-input v-model="loginForm.checkCode"></el-input>
+            <el-button class="get-code" @click="toSendLoginCheckCode">获取验证码</el-button>
+          </div>
+          
+        </el-form-item>
 
-      <el-form-item label="密码">
-        <el-input v-model="loginForm.password" type="password"></el-input>
-      </el-form-item>
-      <el-form-item label="验证码">
-        <el-input v-model="loginForm.checkCode" ></el-input>
-        <el-button type="primary" id="get-code" @click="toSendLoginCheckCode">获取验证码</el-button>
-      </el-form-item>
-    </el-form>
+        <el-form-item>
+          <el-button @click="toLogin" type="primary" class="submit">登录</el-button>
+        </el-form-item>
+      </el-form>
 
-    <el-button @click="toLogin">登录</el-button>
+      
+    </div>
   </div>
 </template>
 
@@ -54,11 +63,46 @@ export default {
   },
 }
 </script>
-
-<style>
-#get-code {
-  margin-left: 20px;
+<style lang="scss" scoped>
+.login-page{
+  position: relative;
+  height: 100vh;
+  background: url(../../public/background.jpg) no-repeat;
+  background-size: 100%;
+}
+.form-box{
+  position:absolute;
+  top:0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width:315px;
+  height:240px;
+  margin: auto;
+  padding: 10px 20px 25px 15px;
+  background-color: #fff;
+  border-radius: 20px;
+  .get-code{
+    margin-left: 20px;
+  }
 }
 </style>
+
+<style lang="scss">
+.form-box{
+  .el-input{
+    // width:80%;
+  }
+  .submit{
+    width:195px;
+  }
+}
+#code-input{
+  .el-input{
+    width:143px;
+  }
+}
+</style>
+
 
 
