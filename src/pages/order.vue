@@ -64,7 +64,7 @@
         </el-card>
 
         <el-dialog
-            title="提示"
+            title="订单详情"
             :visible.sync="dialogVisible">
             <div v-for="item in skuList" :key="item.id" class="list">
                 <el-form label-width="80px">

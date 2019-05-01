@@ -14,7 +14,7 @@
                 <el-table-column prop="categoryName" label="名称"  align="center"></el-table-column>
                 <el-table-column prop="" label="操作"  align="center">
                     <template slot="header">
-                        <el-button type="primary" @click="visible=true; title='添加分类'">
+                        <el-button type="primary" @click="name='';visible=true; title='添加分类'">
                             添加分类
                         </el-button>
                     </template>

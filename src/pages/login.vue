@@ -2,11 +2,11 @@
   <div class="login-page">
     <div class="form-box">
       <el-form v-model="loginForm" label-width="60px" size="small">
-        <p>社区团购系统</p>
+        <p class="title">社区购后台</p>
         <el-form-item label="手机号">
           <el-input v-model="loginForm.phone"></el-input>
         </el-form-item>
-        <el-form-item label="密码">
+        <el-form-item label="密 码">
           <el-input v-model="loginForm.password" type="password"></el-input>
         </el-form-item>
         <el-form-item label="验证码">
@@ -42,6 +42,13 @@ export default {
 
   methods: {
     toSendLoginCheckCode() {
+      if(!this.loginForm.phone){
+        this.$notify({
+                    message: '请输入手机号',
+                    type: 'warning'
+                })
+        return;
+      }
       sendLoginCheckCode({
         phone: this.loginForm.phone
       }).then(() => {
@@ -86,6 +93,13 @@ export default {
     margin-left: 20px;
   }
 }
+
+.title{
+  text-align: center;
+  font-size: 22px;
+  color: #ff5660;
+  margin: 10px auto 20px;
+}
 </style>
 
 <style lang="scss">
@@ -95,6 +109,8 @@ export default {
   }
   .submit{
     width:195px;
+    background-color: #ff5660;
+    border-color: #ff5660;
   }
 }
 #code-input{
