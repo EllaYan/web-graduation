@@ -52,6 +52,7 @@ export default {
         loginOut() {
             localStorage.clear();
             this.$router.push({path: '/login'})
+            location.reload()
         }
     }
 }
