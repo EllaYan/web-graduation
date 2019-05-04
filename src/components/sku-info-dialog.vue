@@ -157,7 +157,7 @@ export default {
   },
   data() {
     return {
-      qiniuUpload: "http://upload.qiniup.com",
+      qiniuUpload: "https://upload.qiniup.com",
       qiniuUrl: "http://img.shequgo.shop/",
       uploadData: {
         token: ""
