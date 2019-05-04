@@ -32,7 +32,7 @@
                             <el-button type="text" @click="toUpdateRegimentalInfo(scope.row,1)" v-if="scope.row.status === 0">通过</el-button>
                             <el-button type="text" @click="toUpdateRegimentalInfo(scope.row,2)" style="color:red;" v-if="scope.row.status === 0">驳回</el-button>
                             <span v-if="scope.row.status === 1">已通过</span>
-                            <span v-if="scope.row.status === 2">已通过</span>
+                            <span v-if="scope.row.status === 2">已驳回</span>
                         </template>
                     </el-table-column>
                 </el-table>
