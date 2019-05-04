@@ -24,6 +24,7 @@
             <div v-loading="loading" element-loading-text="加载中">
                 <el-table :data="tableData" :header-row-style="{color:'#333'}">
                     <el-table-column prop="realName" label="姓名" min-width="120" align="center"></el-table-column>
+                    <el-table-column prop="shopName" label="店铺名称" min-width="120" align="center"></el-table-column>
                     <el-table-column prop="phone" label="手机号" min-width="120" align="center"></el-table-column>
                     <el-table-column prop="address" label="地址" min-width="160" align="center" :show-overflow-tooltip="true"></el-table-column>
                     <el-table-column prop="createData" :formatter="formatDate" label="申请日期" min-width="120" align="center"></el-table-column>
