@@ -255,6 +255,13 @@ export default {
       let param = this.form
       param.skuId =  this.info.id
       param.isShow = this.form.isShow ? 1 : 0
+      let detailList = []
+      this.fileList2.forEach(e => {
+        let url = this.qiniuUrl + e.response.key
+        detailList.push(url)
+      })
+      let richText = detailList.join('@#')
+      param.richText = richText
       this.$refs.skuForm.validate((validate) => {
         if(validate) {
           updateSku(param).then(() => {
