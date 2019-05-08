@@ -4,6 +4,9 @@
       :title="title"
       :visible.sync="dialogVisible"
       :before-close="close"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+      :show-close="false"
     >
       <el-form
         label-position="right"
@@ -262,7 +265,13 @@ export default {
       param.isShow = this.form.isShow ? 1 : 0
       let detailList = []
       this.fileList2.forEach(e => {
-        let url = this.qiniuUrl + e.response.key
+        let url = ""
+        if(e.response){
+          url = this.qiniuUrl + e.response.key
+        } else {
+          url = e.url
+        }
+        
         detailList.push(url)
       })
       let richText = detailList.join('@#')
