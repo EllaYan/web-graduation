@@ -92,7 +92,28 @@
           </el-switch>
         </el-form-item>
 
-        <el-form-item label="图文详情">
+        <el-form-item label="图片详情">
+          <el-upload
+            ref="uploadPanel"
+            class="upload-demo"
+            :action="qiniuUpload"
+            :data="uploadData"
+            :on-change="handleChangeDetail"
+            :on-success="handleSuccessDetail"
+            :on-remove="handleRemoveDetail"
+            :before-upload="beforeUpload"
+            list-type="picture"
+            :file-list="fileList2"
+          >
+            <el-button
+              size="small"
+              type="primary"
+            >点击上传</el-button>
+            <div
+              slot="tip"
+              class="el-upload__tip"
+            >只能上传jpg/png文件，且不超过500kb</div>
+          </el-upload>
         </el-form-item>
       </el-form>
       <span
@@ -140,15 +161,28 @@ export default {
     info: {
       handler(val) {
         this.fileList = []
+        this.fileList2 = []
         if(this.infoType === 2) {
           this.form = {...val}
+          // 处理上架开关
           this.form.isShow = !!val.isShow
+          // 处理缩略图
           let obj = {
             name: '',
             url: val.thumbnail
           }
           this.fileList.push(obj)
-          window.console.log('dhjsh', this.fileList)
+          // 处理图片详情
+          if(val.richText) {
+            let urls = val.richText.split('@#')
+            urls.forEach((e) => {
+              let obj = {
+                name: '',
+                url: e
+              }
+              this.fileList2.push(obj)
+            })
+          }
         }
       },
       immediate:true,
@@ -163,6 +197,7 @@ export default {
         token: ""
       },
       fileList: [],
+      fileList2: [],
       dialogVisible: false,
       title: "",
       categoryList: [],
@@ -205,6 +240,7 @@ export default {
         isShow: 0
       }
       this.fileList = []
+      this.fileList2 = []
       this.uploadData.token = ''
       this.dialogVisible = false
     },
@@ -234,9 +270,16 @@ export default {
       })
     },
     toAdd() {
-      window.console.log(this.form)
       let param = this.form
+      let detailList = []
+      this.fileList2.forEach(e => {
+        let url = this.qiniuUrl + e.response.key
+        detailList.push(url)
+      })
+      let richText = detailList.join('@#')
+      param.richText = richText
       param.isShow = this.form.isShow ? 1 : 0
+      window.console.log('param', param)
       this.$refs.skuForm.validate((validate) => {
         if(validate) {
           addSku(param).then(() => {
@@ -267,6 +310,20 @@ export default {
     handleRemove() {
       this.form.thumbnail = ''
     },
+
+    handleChangeDetail(file, fileList) {
+      this.fileList2 = fileList;
+    },
+    handleSuccessDetail() {
+    },
+    handleRemoveDetail(a,b) {
+      this.fileList2 = b
+      window.console.log('a',a)
+      window.console.log('b',b)
+      window.console.log('c',this.fileList2)
+    },
+
+
     beforeUpload(file) {
       if (file.size > 524288) {
         this.$message({

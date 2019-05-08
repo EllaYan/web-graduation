@@ -27,48 +27,48 @@
         
         <el-dialog title="修改个人信息" :visible.sync="editVisible" width="40%">
 
-            <el-form size="small" label-width="70px" class="info-form" v-model="adminInfo">
-                <el-form-item label="用户名">
-                    <el-input v-model="name"></el-input>
+            <el-form size="small" label-width="70px" class="info-form" :model="adminInfo" ref="editForm" :rules="editFormRules">
+                <el-form-item label="用户名" prop="name">
+                    <el-input v-model="adminInfo.name"></el-input>
                 </el-form-item>
 
-                <el-form-item label="手机号">
-                    <el-input v-model="phone"></el-input>
+                <el-form-item label="手机号" prop="phone">
+                    <el-input v-model="adminInfo.phone"></el-input>
                 </el-form-item>
 
-                <el-form-item label="密码">
-                    <el-input v-model="password"></el-input>
+                <el-form-item label="密码" prop="password">
+                    <el-input v-model="adminInfo.password"></el-input>
                 </el-form-item>
 
-                <el-form-item label="验证码">
-                    <el-input v-model="checkCode"></el-input>
+                <el-form-item label="验证码" prop="checkCode">
+                    <el-input v-model="adminInfo.checkCode"></el-input>
                     <el-button type="primary" id="get-code" @click="toSendAdminCheckCode">获取验证码</el-button>
                 </el-form-item>
 
             </el-form>
 
             <span slot="footer" class="dialog-footer">
-                <el-button @click="editVisible = false" size="small">取 消</el-button>
+                <el-button @click="closeEdit" size="small">取 消</el-button>
                 <el-button type="primary" @click="toUpdateAdmin" size="small">确 定</el-button>
             </span>
         </el-dialog>
 
         <el-dialog title="添加管理员" :visible.sync="addVisible" width="40%">
 
-            <el-form v-model="addAdmainInfo" class="info-form" size="small" label-width="70px">
-                <el-form-item label="用户名">
-                    <el-input v-model="name"></el-input>
+            <el-form :model="addAdmainInfo" class="info-form" size="small" label-width="70px" ref="addForm" :rules="addFormRule">
+                <el-form-item label="用户名" prop="name">
+                    <el-input v-model="addAdmainInfo.name"></el-input>
                 </el-form-item>
-                <el-form-item label="手机号">
-                    <el-input v-model="phone"></el-input>
+                <el-form-item label="手机号" prop="phone">
+                    <el-input v-model="addAdmainInfo.phone"></el-input>
                 </el-form-item>
-                <el-form-item label="初始密码">
-                    <el-input v-model="password" type="password"></el-input>
+                <el-form-item label="初始密码" prop="password">
+                    <el-input v-model="addAdmainInfo.password" type="password"></el-input>
                 </el-form-item>
             </el-form>
 
             <span slot="footer" class="dialog-footer">
-                <el-button @click="addVisible = false" size="small">取 消</el-button>
+                <el-button @click="closeAdd" size="small">取 消</el-button>
                 <el-button type="primary" @click="toAddAdmin" size="small">确 定</el-button>
             </span>
         </el-dialog>
@@ -84,16 +84,39 @@ export default {
             loading: false,
             editVisible: false,
             addVisible: false,
-            adminInfo: {},
-            addAdmainInfo: {},
+            adminInfo: {
+                name: '',
+                phone: '',
+                password:'',
+                checkCode: '',
+            },
+            addAdmainInfo: {
+                name: '',
+                phone: '',
+                password:'',
+            },
             admainList: [],
-            name: '',
-            phone: '',
-            password:'',
-            checkCode: ''
+            addFormRule: {
+                name: [{ required: true, message: '请输入用户名', trigger: 'change' }],
+                phone: [{ required: true, message: '请输入手机号', trigger: 'change' }],
+                password: [{ required: true, message: '请输入初始密码', trigger: 'change' }],
+            },
+            editFormRules:{
+                name: [{ required: true, message: '请输入用户名', trigger: 'change' }],
+                phone: [{ required: true, message: '请输入手机号', trigger: 'change' }],
+                checkCode: [{ required: true, message: '请输入验证码', trigger: 'change' }],
+            },
         }
     },
     methods: {
+        closeEdit() {
+            this.$refs['editForm'].resetFields()
+            this.editVisible = false
+        },
+        closeAdd() {
+            this.$refs['addForm'].resetFields()
+            this.addVisible = false
+        },
         getAdminList() {
             listAdmin().then((res) => {
                 this.admainList = res.data
@@ -101,28 +124,36 @@ export default {
             })
         },
         showAddAdmin() {
-            this.name = '',
-            this.phone = '',
-            this.password ='',
+            this.addAdmainInfo.name = '',
+            this.addAdmainInfo.phone = '',
+            this.addAdmainInfo.password ='',
             this.addVisible = true
         },
         toAddAdmin() {
-            addAdmin({
-                name: this.name,
-                phone: this.phone,
-                password: this.password
-            }).then(() => {
-                this.addVisible = false
-                this.getAdminList()
+            this.$refs['addForm'].validate((validate) => {
+                if(validate) {
+                    addAdmin({
+                        name: this.addAdmainInfo.name,
+                        phone: this.addAdmainInfo.phone,
+                        password: this.addAdmainInfo.password
+                    }).then(() => {
+                        this.$refs['addForm'].resetFields()
+                        this.addVisible = false
+                        this.getAdminList()
+                    })
+                }
             })
         },
         showUpdateAdmin() {
-            this.name = this.adminInfo.name,
-            this.phone = this.adminInfo.phone,
-            this.password = '',
+            this.adminInfo.checkCode = ''
+            this.adminInfo.password = ''
             this.editVisible = true
         },
         toSendAdminCheckCode() {
+            if (!this.phone) {
+                this.$message.error('请输入手机号')
+                return
+            }
             sendAdminCheckCode().then(() => {
                 this.$notify({
                     message: '验证码发送成功',
@@ -131,15 +162,19 @@ export default {
             })
         },
         toUpdateAdmin(){
-            updateAdmin({
-                name: this.name,
-                phone: this.phone,
-                password: this.password,
-                checkCode: this.checkCode
-            }).then(() => {
-                this.editVisible = false
-                this.getAdminList()
-            })
+            this.$refs['editForm'].validate((validate) => {
+                if(validate) {
+                     updateAdmin({
+                        name: this.adminInfo.name,
+                        phone: this.adminInfo.phone,
+                        password: this.adminInfo.password,
+                        checkCode: this.adminInfo.checkCode
+                    }).then(() => {
+                        this.editVisible = false
+                        this.getAdminList()
+                    })
+                }
+            }) 
         }
     },
     filters: {

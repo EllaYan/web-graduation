@@ -54,6 +54,10 @@ export default {
     },
     methods: {
         toSubmit() {
+            if(!this.name) {
+                this.$message.error('请输入分类名')
+                return
+            }
             if(this.title === '添加分类') {
                 addCategory({categoryName: this.name}).then(() => {
                     this.$notify({
