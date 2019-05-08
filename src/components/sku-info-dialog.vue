@@ -3,7 +3,7 @@
     <el-dialog
       :title="title"
       :visible.sync="dialogVisible"
-      :before-close="reset"
+      :before-close="close"
     >
       <el-form
         label-position="right"
@@ -120,7 +120,7 @@
         slot="footer"
         class="dialog-footer"
       >
-        <el-button @click="reset()">取 消</el-button>
+        <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button
           type="primary"
           @click="submit"
@@ -226,6 +226,10 @@ export default {
     };
   },
   methods: {
+    close() {
+      this.dialogVisible = false
+      this.reset()
+    },
     reset() {
       this.form = {
         categoryId: "",
@@ -242,7 +246,7 @@ export default {
       this.fileList = []
       this.fileList2 = []
       this.uploadData.token = ''
-      this.dialogVisible = false
+      // this.dialogVisible = false
     },
     submit() {
       if(this.infoType === 1) {
@@ -250,6 +254,7 @@ export default {
       } else {
         this.toUpdate()
       }
+      this.dialogVisible = false
     },
     toUpdate() {
       let param = this.form

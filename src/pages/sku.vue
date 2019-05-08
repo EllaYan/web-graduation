@@ -222,6 +222,7 @@ export default {
         addSku() {
             this.infoType = 1
             this.$refs.skuDialog.dialogVisible = true
+            this.$refs.skuDialog.reset()
             this.skuInfo = {}
         },
         handlePage() {
