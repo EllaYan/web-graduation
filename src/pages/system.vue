@@ -55,11 +55,11 @@
 
         <el-dialog title="添加管理员" :visible.sync="addVisible" width="40%">
 
-            <el-form :model="addAdmainInfo" class="info-form" size="small" label-width="70px" ref="addForm" :rules="addFormRule">
-                <el-form-item label="用户名" prop="name">
+            <el-form :model="addAdmainInfo" class="info-form" size="small" label-width="150px" ref="addForm" :rules="addFormRule">
+                <el-form-item label="用户名  " prop="name">
                     <el-input v-model="addAdmainInfo.name"></el-input>
                 </el-form-item>
-                <el-form-item label="手机号" prop="phone">
+                <el-form-item label="手机号  " prop="phone">
                     <el-input v-model="addAdmainInfo.phone"></el-input>
                 </el-form-item>
                 <el-form-item label="初始密码" prop="password">

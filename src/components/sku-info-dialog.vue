@@ -346,7 +346,7 @@ export default {
 
 
     beforeUpload(file) {
-      if (file.size > 524288) {
+      if (file.size > 524288000000) {
         this.$message({
           message: "图片大小不能超过500kb！",
           type: "warning"

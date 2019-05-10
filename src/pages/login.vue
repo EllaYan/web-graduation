@@ -68,6 +68,12 @@ export default {
 
     },
   },
+  created() {
+    let authorization = localStorage.getItem('Authorization')
+    if(authorization){
+      this.$router.push({ path:'/classify' })
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
