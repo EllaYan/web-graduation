@@ -37,7 +37,7 @@
                 </el-form-item>
 
                 <el-form-item label="密码" prop="password">
-                    <el-input v-model="adminInfo.password"></el-input>
+                    <el-input v-model="adminInfo.password" type="password"></el-input>
                 </el-form-item>
 
                 <el-form-item label="验证码" prop="checkCode">
@@ -95,6 +95,7 @@ export default {
                 phone: '',
                 password:'',
             },
+            me:{},
             admainList: [],
             addFormRule: {
                 name: [{ required: true, message: '请输入用户名', trigger: 'change' }],
@@ -120,7 +121,7 @@ export default {
         getAdminList() {
             listAdmin().then((res) => {
                 this.admainList = res.data
-                this.adminInfo = res.data[0]
+                this.me = res.data[0]
             })
         },
         showAddAdmin() {
@@ -147,10 +148,12 @@ export default {
         showUpdateAdmin() {
             this.adminInfo.checkCode = ''
             this.adminInfo.password = ''
+            this.adminInfo.name = this.me.name
+            this.adminInfo.phone = this.me.phone
             this.editVisible = true
         },
         toSendAdminCheckCode() {
-            if (!this.phone) {
+            if (!this.adminInfo.phone) {
                 this.$message.error('请输入手机号')
                 return
             }

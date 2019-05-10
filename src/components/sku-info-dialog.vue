@@ -100,6 +100,7 @@
             ref="uploadPanel"
             class="upload-demo"
             :action="qiniuUpload"
+            :multiple="true"
             :data="uploadData"
             :on-change="handleChangeDetail"
             :on-success="handleSuccessDetail"
